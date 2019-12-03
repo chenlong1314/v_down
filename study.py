@@ -1,26 +1,46 @@
+
 import sys
-from PyQt5.Qt import QUrl, QVideoWidget
-from PyQt5.QtMultimedia import QMediaPlayer, QMediaContent, QMediaPlaylist
-from PyQt5.QtWidgets import QApplication, QWidget
+import urllib.request
+from PyQt5.QtCore import Qt, QThread, pyqtSignal
+from PyQt5.QtWidgets import QApplication, QWidget, QPushButton, QLabel, QVBoxLayout
 
 
 class Demo(QWidget):
     def __init__(self):
         super(Demo, self).__init__()
-        self.playlist = QMediaPlaylist(self)
-        self.video_widget = QVideoWidget(self)              # 1
-        self.video_widget.resize(self.width(), self.height())
+        self.button = QPushButton('Start', self)
+        self.button.clicked.connect(self.start_func)
+        self.label = QLabel('Ready to do', self)
+        self.label.setAlignment(Qt.AlignCenter)
 
-        self.player = QMediaPlayer(self)
-        self.player.setPlaylist(self.playlist)
-        self.player.setVideoOutput(self.video_widget)       # 2
+        self.crawl_thread = CrawlThread()
+        self.crawl_thread.status_signal.connect(self.status_func)
 
-        self.playlist.addMedia(QMediaContent(QUrl.fromLocalFile('/Users/leif/PycharmProjects/v_down/images/mp4.mp4')))  # 3
-        self.playlist.setPlaybackMode(QMediaPlaylist.Loop)
-        self.playlist.setCurrentIndex(2)
+        self.v_layout = QVBoxLayout()
+        self.v_layout.addWidget(self.label)
+        self.v_layout.addWidget(self.button)
+        self.setLayout(self.v_layout)
 
-        self.player.setVolume(80)
-        self.player.play()
+    def start_func(self):
+        self.crawl_thread.start()
+
+    def status_func(self, status):
+        self.label.setText(status)
+
+
+class CrawlThread(QThread):
+    status_signal = pyqtSignal(str)
+
+    def __init__(self):
+        super(CrawlThread, self).__init__()
+
+    def run(self):
+        self.status_signal.emit('Crawling')
+        response = urllib.request.urlopen('https://www.python.org')
+        self.status_signal.emit('Saving')
+        with open('python.txt', 'w') as f:
+            f.write(response.read().decode('utf-8'))
+        self.status_signal.emit('Done')
 
 
 if __name__ == '__main__':

@@ -2,8 +2,9 @@ import sys, os
 from untitled import Ui_Form
 from PyQt5.QtWidgets import *
 import you_get
-from PyQt5.QtGui import *
 from PyQt5.QtCore import *
+
+
 
 def download(url, path):
     sys.argv = ['you-get', '-o', path, url]
@@ -21,6 +22,7 @@ class MainWindow(QMainWindow):
         self.ui.btn1.clicked.connect(self.dir)
         self.statusBar().showMessage('版本：v0.1 -- 作者邮箱：admin@tyty.xyz')
 
+
     def dir(self):
         directory = QFileDialog.getExistingDirectory(self, "选取文件夹", "./")  # 起始路径
         print(directory)
@@ -35,7 +37,7 @@ class MainWindow(QMainWindow):
         if not url:
             dialog = QDialog()
             # 创建按钮到新创建的dialog对象中
-            text = QLabel("没有输入地址哦",dialog)
+            text = QLabel("没有输入地址哦", dialog)
             # 移动按钮，设置dialog的标题
             text.move(50, 50)
             dialog.setWindowTitle("小提示")
@@ -43,13 +45,17 @@ class MainWindow(QMainWindow):
             dialog.setWindowModality(Qt.ApplicationModal)
             dialog.exec_()
         else:
-            info = QMessageBox()
-            info.setText("正在下载中。。。")
-            info.setWindowTitle("Information")
-            info.setStandardButtons(QMessageBox.Ok)
-            info.button(QMessageBox.Ok).animateClick(3 * 1000)
-            info.exec_()
-            download(url, path)
+            try:
+                info = QMessageBox()
+                info.setText("正在下载中。。。")
+                info.setWindowTitle("Information")
+                info.setStandardButtons(QMessageBox.Ok)
+                info.button(QMessageBox.Ok).animateClick(3 * 1000)
+                info.exec_()
+                download(url,path)
+            except Exception as e:
+                print("error")
+
 
 
 

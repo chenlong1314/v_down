@@ -185,7 +185,8 @@ font: 14pt &quot;Kaiti SC&quot;;</string>
     </rect>
    </property>
    <property name="styleSheet">
-    <string notr="true">background-image: url(:/Users/leif/PycharmProjects/v_down/images/timg.png);
+    <string notr="true">
+background-image: url(:/Users/leif/PycharmProjects/v_down/images/timg.png);
 </string>
    </property>
   </widget>

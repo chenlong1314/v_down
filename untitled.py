@@ -81,7 +81,8 @@ class Ui_Form(object):
         self.label_4.setObjectName("label_4")
         self.widget = QtWidgets.QWidget(Form)
         self.widget.setGeometry(QtCore.QRect(-1, -1, 491, 431))
-        self.widget.setStyleSheet("background-image: url(:/Users/leif/PycharmProjects/v_down/images/timg.png);\n"
+        self.widget.setStyleSheet("\n"
+"background-image: url(:/Users/leif/PycharmProjects/v_down/images/timg.png);\n"
 "")
         self.widget.setObjectName("widget")
         self.widget.raise_()

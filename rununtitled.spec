@@ -30,8 +30,11 @@ exe = EXE(pyz,
           upx=True,
           upx_exclude=[],
           runtime_tmpdir=None,
-          console=False , icon='icon.ico')
+          console=False , icon='icon.icns')
 app = BUNDLE(exe,
              name='rununtitled.app',
-             icon='icon.ico',
-             bundle_identifier=None)
+             icon='icon.icns',
+             bundle_identifier=None,
+             info_plist={
+             'NSHighResolutionCapable':'True',
+             })

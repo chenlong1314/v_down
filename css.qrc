@@ -1,8 +1,6 @@
 <RCC>
   <qresource prefix="/Users/leif/PycharmProjects/v_down">
     <file>images/timg.png</file>
-  </qresource>
-  <qresource prefix="icon">
-    <file>icon.ico</file>
+    <file>icon.icns</file>
   </qresource>
 </RCC>
